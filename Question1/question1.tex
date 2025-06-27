@@ -1,0 +1,76 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\renewcommand{\baselinestretch}{1.5}
+\begin{document}
+Question 1
+
+Primal Hard Margin:
+\begin{equation}
+    \begin{aligned}
+        &\underset{\mathbf{w},\,b}{\text{minimize}} \quad \frac{1}{2} \|\mathbf{w}\|^2 \\
+        &\text{subject to} \quad y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1, \quad \forall i
+    \end{aligned}
+\end{equation}
+
+General \textbf{convex optimization problem} format:
+\begin{equation}
+    \min_xf(x);\quad s.t. ~g_i(x)\leq 0
+\end{equation}
+
+Transform the primal hard margin into such format:
+\begin{equation}
+    \begin{aligned}
+        \underset{\mathbf{w},\,b}{\text{minimize}} \quad &f(x) = \frac{1}{2} \|\mathbf{w}\|^2 \\
+        \text{subject to} \quad &g_i(x) = 1 - y_i (\mathbf{w}^\top \mathbf{x}_i + b) \leq 0, \quad \forall i
+    \end{aligned}
+\end{equation}
+
+General convex primal corresponded \textbf{Lagrangian function} is:
+\begin{equation}
+    \mathcal{L}(x, \{\alpha_i\}) = f(x) + \sum_i\alpha_ig_i(x)
+\end{equation}
+
+Based on equation (1) and (3), we get Lagrangian dual equation:
+\begin{equation}
+    \mathcal{L}(x, \{\alpha_i\}) = \frac{1}{2} \|\mathbf{w}\|^2 + \sum_i\alpha_i \left[1 - y_i (\mathbf{w}^\top \mathbf{x}_i + b)\right]
+\end{equation}
+
+Align to more common used format:
+\begin{equation}
+    \mathcal{L}(x, \{\alpha_i\}) = \frac{1}{2} \|\mathbf{w}\|^2 - \sum_i\alpha_i \left[y_i (\mathbf{w}^\top \mathbf{x}_i + b) - 1 \right]
+\end{equation}
+
+To conveniently writing, following derivation would omit $\top$ and $\mathcal{L}$ subscription.
+
+Partially derivate $\textbf{w}$ first:
+\begin{equation}
+    \begin{aligned}
+        \frac{\partial L}{\partial w} &= w - \left[w\cdot \sum_i\alpha_iy_ix_i + \sum_i\alpha_iy_ib \right]' + (\sum_i\alpha_i)' \\
+        &= w - \sum_i\alpha_iy_ix_i - 0 + 0 = 0
+    \end{aligned}
+\end{equation}
+
+Partially derivate $\textbf{b}$:
+\begin{equation}
+    \begin{aligned}
+        \frac{\partial L}{\partial b} &= (\frac{1}{2}||w||^2)' - \left[\sum_i\alpha_iy_iwx_i + b\cdot\sum_i\alpha_iy_i \right]' + (\sum_i\alpha_i)' \\
+        &= 0 - 0 - \sum_i\alpha_iy_i + 0 = 0
+    \end{aligned}
+\end{equation}
+
+Based on equation (7) and (8), we substitute $\textbf{w}$ and $\textbf{b}$:
+\begin{equation}
+    \begin{aligned}
+        \mathcal{L} &= \frac{1}{2}(\sum_i\alpha_iy_ix_i)(\sum_j\alpha_jy_jx_j) - \sum_i\alpha_iy_ix_i \cdot \textbf{w} -  \sum_i\alpha_iy_i \cdot \textbf{b} + \sum_i\alpha_i \\
+        &= \frac{1}{2}(\sum_i\alpha_iy_ix_i)(\sum_j\alpha_jy_jx_j) - (\sum_i\alpha_iy_ix_i) \cdot (\sum_j\alpha_jy_jx_j) \\
+        & - \sum_i\alpha_iy_i \cdot \textbf{b} + \sum_i\alpha_i \\
+        &= -\frac{1}{2}(\sum_i\alpha_iy_ix_i) \cdot (\sum_j\alpha_jy_jx_j) -  0 + \sum_i\alpha_i \\
+    \end{aligned}
+\end{equation}
+
+Finally, we get the \textbf{Dual Hard Margin} equation:
+\begin{equation}
+    \mathcal{L} = \sum_i\alpha_i -\frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_jx_ix_j
+\end{equation}
+
+\end{document}
