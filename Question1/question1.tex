@@ -42,7 +42,8 @@ Align to more common used format:
 
 To conveniently writing, following derivation would omit $\top$ and $\mathcal{L}$ subscription.
 
-Partially derivate $\textbf{w}$ first:
+Based on the KKT first condition, stationarity, we respectively derivate $w$ and $b$:
+
 \begin{equation}
     \begin{aligned}
         \frac{\partial L}{\partial w} &= w - \left[w\cdot \sum_i\alpha_iy_ix_i + \sum_i\alpha_iy_ib \right]' + (\sum_i\alpha_i)' \\
@@ -50,7 +51,6 @@ Partially derivate $\textbf{w}$ first:
     \end{aligned}
 \end{equation}
 
-Partially derivate $\textbf{b}$:
 \begin{equation}
     \begin{aligned}
         \frac{\partial L}{\partial b} &= (\frac{1}{2}||w||^2)' - \left[\sum_i\alpha_iy_iwx_i + b\cdot\sum_i\alpha_iy_i \right]' + (\sum_i\alpha_i)' \\
